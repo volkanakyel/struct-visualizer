@@ -1,7 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Base styles */
+@layer base {
+  * {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-background text-text font-sans;
+  }
+}
+
+/* Hide scrollbar */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -9,4 +23,266 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Dither pattern effect for header - multi-layer stipple effect */
+.dither-pattern {
+  position: relative;
+  overflow: hidden;
+}
+
+.dither-pattern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    /* Dense stipple layer */
+    radial-gradient(circle at 1px 1px, rgba(10, 10, 10, 0.06) 0.5px, transparent 0.5px),
+    /* Medium stipple layer */
+    radial-gradient(circle at 3px 3px, rgba(10, 10, 10, 0.04) 0.5px, transparent 0.5px),
+    /* Sparse stipple layer */
+    radial-gradient(circle at 5px 1px, rgba(10, 10, 10, 0.03) 0.5px, transparent 0.5px);
+  background-size: 3px 3px, 7px 7px, 11px 11px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dither-pattern::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.3) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gradient dither fade effect */
+.dither-fade {
+  position: relative;
+}
+
+/* Horizontal scan lines */
+.scan-lines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(10, 10, 10, 0.01) 2px,
+    rgba(10, 10, 10, 0.01) 4px
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Section number styling */
+.section-number {
+  @apply font-mono text-xs text-muted tracking-wider;
+  letter-spacing: 0.15em;
+}
+
+/* Clean card styling */
+.clean-card {
+  @apply bg-surface border border-border;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.clean-card:hover {
+  @apply border-borderDark shadow-cardHover;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-primary text-white font-medium px-4 py-2 text-sm;
+  @apply transition-all duration-200 ease-out;
+  @apply hover:bg-neutral-800 active:bg-neutral-900;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}
+
+.btn-secondary {
+  @apply bg-transparent text-primary border border-borderDark font-medium px-4 py-2 text-sm;
+  @apply transition-all duration-200 ease-out;
+  @apply hover:bg-primary hover:text-white;
+  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}
+
+/* Dither button - black background with stipple texture */
+.btn-dither {
+  @apply relative text-white font-medium px-5 py-2.5 text-xs tracking-wide uppercase;
+  @apply transition-all duration-200 ease-out;
+  @apply focus:outline-none;
+  background-color: #0a0a0a;
+  overflow: hidden;
+}
+
+.btn-dither::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    radial-gradient(circle at 3px 2px, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 4px 4px, 6px 6px;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.btn-dither::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  pointer-events: none;
+}
+
+.btn-dither:hover::before {
+  opacity: 0.7;
+}
+
+.btn-dither:hover {
+  background-color: #1a1a1a;
+}
+
+.btn-dither:active {
+  background-color: #000;
+}
+
+/* Input styles */
+.input-clean {
+  @apply w-full px-3 py-2 bg-surface border border-border;
+  @apply font-mono text-sm text-text;
+  @apply transition-all duration-200 ease-out;
+  @apply focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary;
+  @apply placeholder:text-muted;
+}
+
+/* Table node styles */
+.table-node-clean {
+  @apply bg-surface border border-borderDark;
+  min-width: 280px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.table-node-clean:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.table-header-clean {
+  @apply px-4 py-3 border-b border-borderDark;
+  @apply bg-secondary;
+}
+
+.table-row-clean {
+  @apply px-4 py-2.5 border-b border-border last:border-b-0;
+  @apply transition-colors duration-150;
+}
+
+.table-row-clean:hover {
+  @apply bg-secondary;
+}
+
+/* Vue Flow customization */
+.vue-flow__background {
+  background-color: #fafafa !important;
+}
+
+.vue-flow__edge-path {
+  stroke: #a3a3a3 !important;
+  stroke-width: 1.5px !important;
+}
+
+.vue-flow__edge.animated .vue-flow__edge-path {
+  stroke-dasharray: 5;
+  animation: dashdraw 0.5s linear infinite;
+}
+
+@keyframes dashdraw {
+  from {
+    stroke-dashoffset: 10;
+  }
+}
+
+.vue-flow__controls {
+  @apply border border-border bg-surface shadow-card;
+}
+
+.vue-flow__controls-button {
+  @apply bg-surface border-border text-text;
+  @apply hover:bg-secondary;
+}
+
+.vue-flow__minimap {
+  @apply border border-border bg-surface shadow-card;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  @apply bg-black/20 backdrop-blur-sm;
+}
+
+/* Subtle grid pattern */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(10, 10, 10, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 10, 10, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Type badges for schema visualization */
+.type-badge {
+  @apply px-1.5 py-0.5 text-xs font-mono rounded;
+}
+
+.type-badge-number {
+  @apply bg-yellow/10 text-yellow;
+}
+
+.type-badge-string {
+  @apply bg-orange/10 text-orange;
+}
+
+.type-badge-date {
+  @apply bg-green/10 text-green;
+}
+
+.type-badge-bool {
+  @apply bg-red/10 text-red;
+}
+
+.type-badge-json {
+  @apply bg-blue/10 text-blue;
+}
+
+.type-badge-relation {
+  @apply bg-purple/10 text-purple;
 }
