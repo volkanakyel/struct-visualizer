@@ -46,22 +46,23 @@
           <!-- Value preview for primitives -->
           <span
             v-if="column.value && column.type !== 'relation'"
-            class="text-xs font-mono text-muted truncate max-w-[100px]"
+            class="text-xs font-mono text-muted truncate max-w-[120px]"
             :title="column.value"
           >
             {{ column.value }}
           </span>
 
-          <!-- Type badge -->
-          <span :class="['type-badge', getTypeBadgeClass(column.type)]">
-            {{ getTypeLabel(column.type) }}
-          </span>
-
           <!-- Relation indicator -->
           <template v-if="column.type === 'relation'">
-            <span class="text-muted">→</span>
+            <span class="text-muted text-xs">→</span>
             <span class="text-xs font-mono text-purple">{{ column.relatedCollection }}</span>
           </template>
+
+          <!-- Type color dot -->
+          <span 
+            :class="['w-2 h-2 rounded-full shrink-0', getTypeDotColor(column.type)]"
+            :title="column.type"
+          ></span>
         </div>
 
         <!-- Source handle for relations -->
@@ -129,44 +130,6 @@ const uniqueTypes = computed(() => {
   return [...new Set(props.data.columns.map(c => c.type))]
 })
 
-const getTypeLabel = (type) => {
-  const labels = {
-    'string': 'str',
-    'number': 'num',
-    'boolean': 'bool',
-    'object': 'obj',
-    'array': 'arr',
-    'null': 'null',
-    'undefined': 'undef',
-    'relation': 'rel'
-  }
-  // Handle array types like "number[]"
-  if (type?.endsWith('[]')) {
-    const baseType = type.slice(0, -2)
-    return (labels[baseType] || baseType) + '[]'
-  }
-  return labels[type] || type
-}
-
-const getTypeBadgeClass = (type) => {
-  const typeMap = {
-    'string': 'type-badge-string',
-    'number': 'type-badge-number',
-    'boolean': 'type-badge-bool',
-    'object': 'type-badge-json',
-    'array': 'type-badge-json',
-    'null': 'bg-secondary text-textMuted',
-    'undefined': 'bg-secondary text-textMuted',
-    'relation': 'type-badge-relation'
-  }
-  // Handle array types
-  if (type?.endsWith('[]')) {
-    const baseType = type.slice(0, -2)
-    return typeMap[baseType] || 'bg-secondary text-textMuted'
-  }
-  return typeMap[type] || 'bg-secondary text-textMuted'
-}
-
 const getTypeDotColor = (type) => {
   const colorMap = {
     'string': 'bg-orange',
@@ -187,15 +150,24 @@ const getTypeDotColor = (type) => {
 
 <style scoped>
 .generic-node {
-  @apply bg-surface border border-border shadow-card min-w-[250px] max-w-[350px];
+  @apply bg-surface border border-border shadow-card text-xs sm:text-sm;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+@media (min-width: 640px) {
+  .generic-node {
+    min-width: 250px;
+    max-width: 350px;
+  }
 }
 
 .generic-header {
-  @apply px-4 py-3 border-b border-border bg-secondary/30;
+  @apply px-3 sm:px-4 py-2 sm:py-3 border-b border-border bg-secondary/30;
 }
 
 .generic-row {
-  @apply px-4 py-2 hover:bg-secondary/50 transition-colors;
+  @apply px-3 sm:px-4 py-1.5 sm:py-2 hover:bg-secondary/50 transition-colors;
 }
 
 .no-scrollbar {
