@@ -1,24 +1,25 @@
 # struct-visualizer
 
-## Project setup
-```
-yarn install
+Nuxt 3 app: JSON / PocketBase schema → interactive graph (Vue Flow).
+
+## Requirements
+
+- **Node** 20.10+
+- **pnpm** — version pinned in [`package.json`](./package.json) (`packageManager`). Enable [Corepack](https://nodejs.org/api/corepack.html): `corepack enable`, then installs use the correct pnpm automatically.
+
+## Setup
+
+```bash
+pnpm install
 ```
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+## Scripts
 
-### Compiles and minifies for production
-```
-yarn build
-```
+| Command        | Description              |
+| -------------- | ------------------------ |
+| `pnpm dev`     | Local dev server         |
+| `pnpm build`   | Production build         |
+| `pnpm preview` | Preview production build |
+| `pnpm generate`| Static site generation   |
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Do not use `npm install` or `yarn`; lockfile is `pnpm-lock.yaml` only.
