@@ -3,10 +3,14 @@ import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-01',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', 'motion-v/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', 'motion-v/nuxt', 'shadcn-nuxt'],
   css: ['~/assets/css/tailwind.css'],
   typescript: {
     strict: true,
+  },
+  shadcn: {
+    prefix: '',
+    componentDir: '@/components/ui',
   },
   app: {
     head: {
@@ -23,7 +27,7 @@ export default defineNuxtConfig({
         },
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
       ],
